@@ -1,0 +1,9 @@
+// Environment variables
+src/main/resources/application.conf
+
+target/
+*.log
+
+// Metals
+.bloop
+.metals
