@@ -15,16 +15,16 @@ object Router {
 
   implicit val hotelEncoder: Encoder[Hotel] = deriveEncoder[Hotel]
 
-  private def handleSuccess(hotels: IO[Array[Hotel]]): IO[Response[IO]] =
-    hotels >>= ((arr: Array[Hotel]) => Ok(arr.asJson))
+  private def handleSuccess: IO[Array[Hotel]] => IO[Response[IO]] =
+    _ >>= ((arr: Array[Hotel]) => Ok(arr.asJson))
 
-  private def handleLimited = TooManyRequests("Too many requests")
+  private def handleLimited: IO[Response[IO]] = TooManyRequests("Too many requests")
 
-  private def handleReponse(res: Option[IO[Array[Hotel]]]): IO[Response[IO]] =
-    res.fold(handleLimited)(handleSuccess)
+  private def handleReponse: Option[IO[Array[Hotel]]] => IO[Response[IO]] =
+    _.fold(handleLimited)(handleSuccess)
 
-  private val wrappedGetByCity = RateLimiter.wrap(Bridge.getByCity, 5, 10)
-  private val wrappedGetByRoom = RateLimiter.wrap(Bridge.getByRoom, 10, 100)
+  private val safeGetByCity = RateLimiter.wrap(CSVBridge.getByCity, 5, 10)
+  private val safeGetByRoom = RateLimiter.wrap(CSVBridge.getByRoom, 10, 100)
 
   def routes[F[_]: Sync]: HttpRoutes[IO] = {
     val dsl = new Http4sDsl[IO]{}
@@ -32,9 +32,9 @@ object Router {
 
     HttpRoutes.of[IO] {
 
-      case GET -> Root / "city" / city => handleReponse(wrappedGetByCity(city))
+      case GET -> Root / "city" / city => handleReponse(safeGetByCity(city))
 
-      case GET -> Root / "room" / room => handleReponse(wrappedGetByRoom(room))
+      case GET -> Root / "room" / room => handleReponse(safeGetByRoom(room))
 
     }
   }
