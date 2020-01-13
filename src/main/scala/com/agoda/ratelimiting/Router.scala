@@ -4,14 +4,14 @@ import cats.effect.{IO, Sync}
 import cats.implicits._
 import org.http4s.{HttpRoutes, Response}
 import org.http4s.dsl.io._
-import io.circe.syntax._
-import io.circe.generic.auto._
+import io.circe.syntax.EncoderOps
+import io.circe.generic.auto.exportEncoder
 import org.http4s.circe.CirceEntityEncoder._
-import com.agoda.ratelimiting.types._
+import com.agoda.ratelimiting.types.Hotel
 
 object Router {
 
-  object PriceSortParam extends OptionalQueryParamDecoderMatcher[String]("price-sorting")
+  object PriceSortingParam extends OptionalQueryParamDecoderMatcher[String]("price-sorting")
 
   private def handleSuccess: IO[Array[Hotel]] => IO[Response[IO]] =
     _ >>= ((arr: Array[Hotel]) => Ok(arr.asJson))
@@ -25,10 +25,10 @@ object Router {
 
     HttpRoutes.of[IO] {
 
-      case GET -> Root / "city" / city :? PriceSortParam(sorting) =>
+      case GET -> Root / "city" / city :? PriceSortingParam(sorting) =>
         handleReponse(HotelsController.getByCity(city, sorting))
 
-      case GET -> Root / "room" / room :? PriceSortParam(sorting) =>
+      case GET -> Root / "room" / room :? PriceSortingParam(sorting) =>
         handleReponse(HotelsController.getByRoom(room, sorting))
 
     }
