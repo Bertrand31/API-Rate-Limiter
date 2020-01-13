@@ -1,3 +1,5 @@
+# API Rate Limiter
+
 MMMMMMMMMMMMMMMMMMMMMMMMWXOxoc;'..            ..';coxOXWMMMMMMMMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMN0dc,.                            .,cd0NMMMMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMWXkc'.         ..',;:cccccc:;,'..         .'ckXWMMMMMMMMMMMMMMMM
@@ -27,7 +29,12 @@ K;                                                                            ;K
 Wk.                                                                          .kW
 MNc                                                                          cNM
 
-# API Rate Limiter
+- [Statement of purpose](#statement-of-purpose)
+- [API](#api)
+- [Rate limiting](#rate-limiting)
+- [Demonstration](#demonstration)
+
+## Statement of Purpose
 
 This project aims to demonstrate how to implement an HTTP rate limiter in Scala.
 It uses http4s for the web server, Circe for JSON handling, and is written in Scala 2.12.
@@ -72,3 +79,11 @@ last `k` seconds ; `None` is returned.
 
 Otherwise, the current timestamp is added to said queue, the underlying function actually gets
 executed, and a `Some` is returned.
+
+## Demonstration
+
+This project comes with a simple JS script to demonstrate the rate limiting of the city endpoint.
+To run it, make sure you have NodeJS installed and run the following:
+```
+$> node ./dosScript.js
+```
