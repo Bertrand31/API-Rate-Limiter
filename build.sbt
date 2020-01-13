@@ -1,6 +1,6 @@
 name := "rate-limiting"
 
-version := "0.0.1-SNAPSHOT"
+version := "0.1"
 
 organization := "com.agoda"
 
