@@ -7,7 +7,7 @@ import org.http4s.implicits._
 import fs2.Stream
 import org.http4s.server.blaze.BlazeServerBuilder
 
-object SickleServer {
+object AgodaServer {
 
   def stream[F[_]: ConcurrentEffect](implicit T: Timer[IO], C: ContextShift[IO]): Stream[IO, Nothing] = {
     val httpApp = (
@@ -25,7 +25,7 @@ object SickleServer {
 object Main extends IOApp {
 
   def run(args: List[String]) =
-    SickleServer
+    AgodaServer
       .stream[IO]
       .compile
       .drain
