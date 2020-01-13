@@ -1,11 +1,10 @@
 package com.agoda.ratelimiting
 
 import scala.concurrent.duration.DurationInt
-import cats.effect.{ExitCode, IO, IOApp}
+import cats.effect.{ConcurrentEffect, ContextShift, Timer, ExitCode, IO, IOApp}
 import cats.implicits._
 import org.http4s.implicits._
 import fs2.Stream
-import cats.effect.{ConcurrentEffect, ContextShift, Timer}
 import org.http4s.server.blaze.BlazeServerBuilder
 
 object SickleServer {
@@ -17,7 +16,7 @@ object SickleServer {
 
     BlazeServerBuilder[IO]
       .bindHttp(8080, "0.0.0.0")
-      .withIdleTimeout(10.minutes)
+      .withIdleTimeout(2.minutes)
       .withHttpApp(httpApp)
       .serve
   }.drain
