@@ -21,7 +21,7 @@ object CSVBridge extends Bridge {
 
   private def arrayToHotel(arr: Array[String]): Hotel = {
     val Array(city, id, room, price) = arr
-    Hotel(city, id.toInt, room, price.toInt)
+    Hotel(id.toInt, city, room, price.toInt)
   }
 
   private def fakeTable: IO[Array[Hotel]] =

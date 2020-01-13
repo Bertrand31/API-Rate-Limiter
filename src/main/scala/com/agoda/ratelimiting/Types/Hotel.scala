@@ -1,3 +1,3 @@
 package com.agoda.ratelimiting.types
 
-case class Hotel(city: String, id: Int, room: String, price: Int)
+case class Hotel(id: Int, city: String, room: String, price: Int)

@@ -3,11 +3,11 @@ package com.agoda.ratelimiting
 import scala.concurrent.duration.DurationInt
 import cats.effect.{ConcurrentEffect, ContextShift, Timer, ExitCode, IO, IOApp}
 import cats.implicits._
-import org.http4s.implicits._
+import org.http4s.implicits.http4sKleisliResponseSyntax
 import fs2.Stream
 import org.http4s.server.blaze.BlazeServerBuilder
 
-object AgodaServer {
+object Server {
 
   def stream[F[_]: ConcurrentEffect](implicit T: Timer[IO], C: ContextShift[IO]): Stream[IO, Nothing] = {
     val httpApp = (
@@ -25,7 +25,7 @@ object AgodaServer {
 object Main extends IOApp {
 
   def run(args: List[String]) =
-    AgodaServer
+    Server
       .stream[IO]
       .compile
       .drain
