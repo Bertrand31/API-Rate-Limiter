@@ -85,5 +85,5 @@ executed, and a `Some` is returned.
 This project comes with a simple JS script to demonstrate the rate limiting of the city endpoint.
 To run it, make sure you have NodeJS installed and run the following:
 ```
-$> node ./dosScript.js
+$> node ./demonstrationScript.js
 ```
