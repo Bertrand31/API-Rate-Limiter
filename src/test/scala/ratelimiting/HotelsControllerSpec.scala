@@ -30,5 +30,4 @@ class HotelsControllerSpec extends FlatSpec {
   val hotelsController = new HotelsController
 
   val res = hotelsController.getByCity("Paris", None)
-  println(res.unsafeRunSync.body.evalTap(println))
 }
