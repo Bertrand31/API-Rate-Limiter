@@ -11,7 +11,7 @@ object CSVBridge extends Bridge {
     Hotel(id.toInt, city, room, price.toInt)
   }
 
-  private def fakeTable: IO[Array[Hotel]] =
+  private def fakeTable: IO[Hotels] =
     IO {
       Source.fromFile("src/main/resources/hoteldb.csv")
         .getLines
@@ -21,9 +21,9 @@ object CSVBridge extends Bridge {
         .toArray
     }
 
-  def getByCity(city: String): IO[Array[Hotel]] =
+  def getByCity(city: String): IO[Hotels] =
     fakeTable.map(_.filter(_.city.toLowerCase == city.toLowerCase))
 
-  def getByRoom(room: String): IO[Array[Hotel]] =
+  def getByRoom(room: String): IO[Hotels] =
     fakeTable.map(_.filter(_.room.toLowerCase == room.toLowerCase))
 }

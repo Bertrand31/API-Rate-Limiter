@@ -2,7 +2,7 @@ package ratelimiting
 
 import cats.effect.{IO, Sync}
 import org.http4s.HttpRoutes
-import org.http4s.dsl.io._
+import org.http4s.dsl.io.{GET, OptionalQueryParamDecoderMatcher, Root, /, ->, :?}
 
 object Router {
 

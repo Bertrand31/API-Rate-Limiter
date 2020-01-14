@@ -1,8 +1,7 @@
 package ratelimiting
 
 import scala.collection.mutable.Queue
-import scala.concurrent.duration.DurationInt
-import scala.concurrent.duration._
+import scala.concurrent.duration.{Duration, DurationInt}
 
 object RateLimiter {
 

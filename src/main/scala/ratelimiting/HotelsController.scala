@@ -8,19 +8,18 @@ import org.http4s.dsl.io._
 import io.circe.syntax.EncoderOps
 import io.circe.generic.auto.exportEncoder
 import org.http4s.circe.CirceEntityEncoder.circeEntityEncoder
-import ratelimiting.types.Hotel
 
 class HotelsController(implicit val bridge: Bridge) {
 
-  private val handleSuccess: IO[Array[Hotel]] => IO[Response[IO]] =
-    _ >>= ((arr: Array[Hotel]) => Ok(arr.asJson))
+  private val handleSuccess: IO[Hotels] => IO[Response[IO]] =
+    _ >>= ((arr: Hotels) => Ok(arr.asJson))
 
   private val handleLimited: IO[Response[IO]] = TooManyRequests("Too many requests")
 
-  private val handleReponse: Option[IO[Array[Hotel]]] => IO[Response[IO]] =
+  private val handleReponse: Option[IO[Hotels]] => IO[Response[IO]] =
     _.fold(handleLimited)(handleSuccess)
 
-  private def handleSorting(sorting: Option[String])(hotels: Array[Hotel]): Array[Hotel] =
+  private def handleSorting(sorting: Option[String])(hotels: Hotels): Hotels =
     sorting.map(_.toLowerCase).fold(hotels)({
       case "asc" => hotels.sortBy(_.price)
       case _ =>     hotels.sortBy(- _.price)
