@@ -1,4 +1,4 @@
-package com.agoda.ratelimiting
+package ratelimiting
 
 import scala.collection.mutable.Queue
 import scala.concurrent.duration.DurationInt

@@ -1,4 +1,4 @@
-package com.agoda.ratelimiting
+package ratelimiting
 
 import scala.concurrent.duration.DurationInt
 import cats.effect.{ConcurrentEffect, ContextShift, Timer, ExitCode, IO, IOApp}

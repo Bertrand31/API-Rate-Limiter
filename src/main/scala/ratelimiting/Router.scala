@@ -1,4 +1,4 @@
-package com.agoda.ratelimiting
+package ratelimiting
 
 import cats.effect.{IO, Sync}
 import org.http4s.HttpRoutes
@@ -13,10 +13,10 @@ object Router {
     HttpRoutes.of[IO] {
 
       case GET -> Root / "city" / city :? PriceSortingParam(sorting) =>
-        HotelsController.getByCity(city, sorting)
+        hotelsController.getByCity(city, sorting)
 
       case GET -> Root / "room" / room :? PriceSortingParam(sorting) =>
-        HotelsController.getByRoom(room, sorting)
+        hotelsController.getByRoom(room, sorting)
 
     }
   }
