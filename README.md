@@ -56,7 +56,7 @@ Note: all the parameters of both endpoints are case-insensitive.
 ## Rate limiting
 
 The main goal of this project is to implement and showcase a rate limiter in Scala.
-The code for the rate limiter itself can be found here: [RateLimiter.scala](src/main/scala/com/agoda/ratelimiting/RateLimiter.scala).
+The code for the rate limiter itself can be found here: [RateLimiter.scala](src/main/scala/ratelimiting/RateLimiter.scala).
 
 It works as follows: first, we wrap a function with wrapUnary. If that function's type was `A => B`,
 the wrapped function has a type of `A => Option[B]`. This is because that wrapped function will

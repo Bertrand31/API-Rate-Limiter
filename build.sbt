@@ -2,7 +2,7 @@ name := "rate-limiting"
 
 version := "0.1"
 
-organization := "com.agoda"
+organization := "bertrand"
 
 scalaVersion := "2.12.10"
 
