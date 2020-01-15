@@ -13,15 +13,16 @@ val LogbackVersion = "1.2.3"
 
 libraryDependencies ++= Seq(
   // Web server
-  "org.http4s"      %% "http4s-blaze-server" % Http4sVersion,
-  "org.http4s"      %% "http4s-blaze-client" % Http4sVersion,
-  "org.http4s"      %% "http4s-circe" % Http4sVersion,
-  "org.http4s"      %% "http4s-dsl" % Http4sVersion,
+  "org.http4s"    %% "http4s-blaze-server" % Http4sVersion,
+  "org.http4s"    %% "http4s-blaze-client" % Http4sVersion,
+  "org.http4s"    %% "http4s-circe" % Http4sVersion,
+  "org.http4s"    %% "http4s-dsl" % Http4sVersion,
   // JSON encoding and decoding
-  "io.circe"        %% "circe-generic" % CirceVersion,
+  "io.circe"      %% "circe-generic" % CirceVersion,
   // Logging
   "com.typesafe.scala-logging" %% "scala-logging" % "3.9.0",
   // Tests
+  "org.specs2"    %% "specs2-core"         % Specs2Version % "test",
   "org.scalatest" %% "scalatest" % "3.0.8" % "test"
 )
 

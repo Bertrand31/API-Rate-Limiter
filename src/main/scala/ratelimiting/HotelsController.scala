@@ -4,7 +4,7 @@ import scala.concurrent.duration.DurationInt
 import cats.effect.IO
 import cats.implicits._
 import org.http4s.Response
-import org.http4s.dsl.io._
+import org.http4s.dsl.io.{Ok, TooManyRequests, http4sOkSyntax, http4sTooManyRequestsSyntax}
 import io.circe.syntax.EncoderOps
 import io.circe.generic.auto.exportEncoder
 import org.http4s.circe.CirceEntityEncoder.circeEntityEncoder
