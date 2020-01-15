@@ -13,6 +13,10 @@ import ratelimiting.types.Hotel
 
 class HotelsControllerSpec extends FlatSpec {
 
+  implicit val bridge = FakeBridge
+  val hotelsController = new HotelsController
+  val rateLimitingHotelsController = new HotelsController
+
   behavior of "the Hotels controller"
 
   def compareBodies(a: IO[Response[IO]], b: IO[Response[IO]]): Assertion =
@@ -37,9 +41,6 @@ class HotelsControllerSpec extends FlatSpec {
         )
       }
   }
-
-  implicit val bridge = FakeBridge
-  val hotelsController = new HotelsController
 
   behavior of "the city endpoint controller"
 
@@ -99,7 +100,7 @@ class HotelsControllerSpec extends FlatSpec {
 
     val attempts =
       (1 to 13)
-        .map(_ => hotelsController.getByCity("Paris", None))
+        .map(_ => rateLimitingHotelsController.getByCity("Paris", None))
         .drop(10)
         .foreach(compareBodies(_, TooManyRequests("Too many requests")))
   }
@@ -122,7 +123,7 @@ class HotelsControllerSpec extends FlatSpec {
 
     val attempts =
       (1 to 103)
-        .map(_ => hotelsController.getByRoom("Deluxe", None))
+        .map(_ => rateLimitingHotelsController.getByRoom("Deluxe", None))
         .drop(100)
         .foreach(compareBodies(_, TooManyRequests("Too many requests")))
   }
