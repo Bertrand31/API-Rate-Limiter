@@ -107,7 +107,7 @@ run using `sbt test`.
 ### Scala and SBT
 
 Please refer to the [SBT docs](https://www.scala-sbt.org/1.0/docs/Setup.html) for directions on
-installation
+installation.
 
 ### Packaging for production
 
