@@ -35,13 +35,14 @@ MNc                                                                          cNM
 - [API](#api)
 - [Rate limiting](#rate-limiting)
 - [Demonstration](#demonstration)
+- [Installation](#installation)
+  - [Scala and SBT](#scala-and-sbt)
+  - [Packaging for production](#packaging-for-production)
 
 ## Statement of Purpose
 
 This project aims to demonstrate how to implement an HTTP rate limiter in Scala.
 It uses http4s for the web server, Circe for JSON handling, and is written in Scala 2.12.
-This project is built using SBT. As such, it can be run by using `sbt run`, and the specs can be
-run using `sbt test`.
 
 ## API
 
@@ -97,3 +98,30 @@ $> node ./demonstrationScript.js
 ```
 This script was written in JavaScript and with no external dependencies so that it could easily be
 run and modified without any other setup than a NodeJS install.
+
+## Installation
+
+This project is built using SBT. As such, it can be run by using `sbt run`, and the specs can be
+run using `sbt test`.
+
+### Scala and SBT
+
+- Please refer to the [SBT docs](https://www.scala-sbt.org/1.0/docs/Setup.html) for directions on
+installation
+
+### Packaging for production
+
+First, clone the Harvester repo to a directory of your choice and `cd` into it.
+Then, in order to generate a binary, run the following:
+```
+sbt universal:packageBin
+```
+It will generate a zip here:
+```
+./target/universal/rate-limiting-%VERSION_NUMBER%.zip
+```
+This zip can now be shipped on a server, or used locally.
+Once it is unzipped, the rate-limiter server can be started from inside the resulting folder with:
+```
+./bin/rate-limiting
+```

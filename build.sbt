@@ -4,6 +4,8 @@ version := "0.1"
 
 organization := "bertrand"
 
+maintainer := "bertrandjun@gmail.com"
+
 scalaVersion := "2.12.10"
 
 val Http4sVersion = "0.20.15"
@@ -29,6 +31,8 @@ libraryDependencies ++= Seq(
 addCompilerPlugin("org.typelevel" %% "kind-projector"     % "0.10.3")
 
 addCompilerPlugin("com.olegpy"    %% "better-monadic-for" % "0.3.0")
+
+enablePlugins(JavaServerAppPackaging)
 
 scalacOptions ++= Seq(
   "-deprecation", // Warn about deprecated features
