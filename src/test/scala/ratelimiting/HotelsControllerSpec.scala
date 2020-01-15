@@ -52,6 +52,46 @@ class HotelsControllerSpec extends FlatSpec {
         Hotel(id=1, city="Toulouse", "Deluxe", price=30)
       ).asJson
     )
+    compareBodies(cities, expected)
+  }
+
+  it should "return cities sorted in descending order when asked to" in {
+
+    val cities = hotelsController.getByCity("Toulouse", Some("DESC"))
+    val expected = Ok(
+      Array(
+        Hotel(id=1, city="Toulouse", "Deluxe", price=30),
+        Hotel(id=1, city="Toulouse", "Deluxe", price=10),
+        Hotel(id=1, city="Toulouse", "Deluxe", price=5)
+      ).asJson
+    )
+    compareBodies(cities, expected)
+  }
+
+  it should "return cities sorted in ascending order when asked to" in {
+
+    val cities = hotelsController.getByCity("Toulouse", Some("ASC"))
+    val expected = Ok(
+      Array(
+        Hotel(id=1, city="Toulouse", "Deluxe", price=5),
+        Hotel(id=1, city="Toulouse", "Deluxe", price=10),
+        Hotel(id=1, city="Toulouse", "Deluxe", price=30)
+      ).asJson
+    )
+    compareBodies(cities, expected)
+  }
+
+  it should "work the same with a lowercase sorting parameter" in {
+
+    val cities = hotelsController.getByCity("Toulouse", Some("asc"))
+    val expected = Ok(
+      Array(
+        Hotel(id=1, city="Toulouse", "Deluxe", price=5),
+        Hotel(id=1, city="Toulouse", "Deluxe", price=10),
+        Hotel(id=1, city="Toulouse", "Deluxe", price=30)
+      ).asJson
+    )
+    compareBodies(cities, expected)
   }
 
   it should "start denying requests from the 11th onwards when bombing the endpoint" in {
