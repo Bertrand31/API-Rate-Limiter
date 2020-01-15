@@ -102,4 +102,15 @@ class HotelsControllerSpec extends FlatSpec {
         .drop(10)
         .foreach(compareBodies(_, TooManyRequests("Too many requests")))
   }
+
+  behavior of "the room endpoint controller"
+
+  it should "start denying requests from the 101th onwards when bombing the endpoint" in {
+
+    val attempts =
+      (1 to 103)
+        .map(_ => hotelsController.getByRoom("Deluxe", None))
+        .drop(100)
+        .foreach(compareBodies(_, TooManyRequests("Too many requests")))
+  }
 }
