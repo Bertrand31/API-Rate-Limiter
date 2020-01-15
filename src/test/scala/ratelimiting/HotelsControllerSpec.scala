@@ -1,12 +1,10 @@
-import scala.util.{Try, Success}
 import org.scalatest.FlatSpec
 import org.scalatest.compatible.Assertion
 import cats.effect.IO
 import org.http4s.Response
-import org.http4s.dsl.io._
+import org.http4s.dsl.io.{Ok, http4sOkSyntax, TooManyRequests, http4sTooManyRequestsSyntax}
 import io.circe.generic.auto._
 import io.circe.syntax.EncoderOps
-import io.circe.generic.auto.exportEncoder
 import org.http4s.circe.CirceEntityEncoder.circeEntityEncoder
 import ratelimiting.{Bridge, HotelsController}
 import ratelimiting.types.Hotel
