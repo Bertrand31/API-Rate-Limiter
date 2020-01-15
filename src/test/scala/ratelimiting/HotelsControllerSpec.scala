@@ -24,15 +24,16 @@ class HotelsControllerSpec extends FlatSpec {
       IO {
         Array(
           Hotel(id=1, city=city, "Deluxe", price=10),
-          Hotel(id=1, city=city, "Deluxe", price=5),
-          Hotel(id=1, city=city, "Deluxe", price=30)
+          Hotel(id=2, city=city, "Deluxe", price=5),
+          Hotel(id=8, city=city, "Deluxe", price=30)
         )
       }
 
     def getByRoom(room: String): IO[Array[Hotel]] =
       IO {
         Array(
-          Hotel(id=2, city="Bangkok", room=room, price=20)
+          Hotel(id=20, city="Bangkok", room=room, price=20),
+          Hotel(id=3, city="Singapour", room=room, price=10)
         )
       }
   }
@@ -48,8 +49,8 @@ class HotelsControllerSpec extends FlatSpec {
     val expected = Ok(
       Array(
         Hotel(id=1, city="Toulouse", "Deluxe", price=10),
-        Hotel(id=1, city="Toulouse", "Deluxe", price=5),
-        Hotel(id=1, city="Toulouse", "Deluxe", price=30)
+        Hotel(id=2, city="Toulouse", "Deluxe", price=5),
+        Hotel(id=8, city="Toulouse", "Deluxe", price=30)
       ).asJson
     )
     compareBodies(cities, expected)
@@ -60,9 +61,9 @@ class HotelsControllerSpec extends FlatSpec {
     val cities = hotelsController.getByCity("Toulouse", Some("DESC"))
     val expected = Ok(
       Array(
-        Hotel(id=1, city="Toulouse", "Deluxe", price=30),
+        Hotel(id=8, city="Toulouse", "Deluxe", price=30),
         Hotel(id=1, city="Toulouse", "Deluxe", price=10),
-        Hotel(id=1, city="Toulouse", "Deluxe", price=5)
+        Hotel(id=2, city="Toulouse", "Deluxe", price=5)
       ).asJson
     )
     compareBodies(cities, expected)
@@ -73,9 +74,9 @@ class HotelsControllerSpec extends FlatSpec {
     val cities = hotelsController.getByCity("Toulouse", Some("ASC"))
     val expected = Ok(
       Array(
-        Hotel(id=1, city="Toulouse", "Deluxe", price=5),
+        Hotel(id=2, city="Toulouse", "Deluxe", price=5),
         Hotel(id=1, city="Toulouse", "Deluxe", price=10),
-        Hotel(id=1, city="Toulouse", "Deluxe", price=30)
+        Hotel(id=8, city="Toulouse", "Deluxe", price=30)
       ).asJson
     )
     compareBodies(cities, expected)
@@ -86,9 +87,9 @@ class HotelsControllerSpec extends FlatSpec {
     val cities = hotelsController.getByCity("Toulouse", Some("asc"))
     val expected = Ok(
       Array(
-        Hotel(id=1, city="Toulouse", "Deluxe", price=5),
+        Hotel(id=2, city="Toulouse", "Deluxe", price=5),
         Hotel(id=1, city="Toulouse", "Deluxe", price=10),
-        Hotel(id=1, city="Toulouse", "Deluxe", price=30)
+        Hotel(id=8, city="Toulouse", "Deluxe", price=30)
       ).asJson
     )
     compareBodies(cities, expected)
@@ -104,6 +105,18 @@ class HotelsControllerSpec extends FlatSpec {
   }
 
   behavior of "the room endpoint controller"
+
+  it should "return unsorted cities when not given a sorting parameter" in {
+
+    val cities = hotelsController.getByRoom("Deluxe", None)
+    val expected = Ok(
+      Array(
+        Hotel(id=20, city="Bangkok", room="Deluxe", price=20),
+        Hotel(id=3, city="Singapour", room="Deluxe", price=10)
+      ).asJson
+    )
+    compareBodies(cities, expected)
+  }
 
   it should "start denying requests from the 101th onwards when bombing the endpoint" in {
 
