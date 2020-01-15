@@ -1,6 +1,7 @@
 package ratelimiting
 
 import scala.concurrent.duration.DurationInt
+import cats.data.Nested
 import cats.effect.IO
 import cats.implicits._
 import org.http4s.Response
@@ -16,8 +17,8 @@ class HotelsController(implicit val bridge: Bridge) {
 
   private val handleLimited: IO[Response[IO]] = TooManyRequests("Too many requests")
 
-  private val handleReponse: Option[IO[Hotels]] => IO[Response[IO]] =
-    _.fold(handleLimited)(handleSuccess)
+  private val handleReponse: Nested[Option, IO, Hotels] => IO[Response[IO]] =
+    _.value.fold(handleLimited)(handleSuccess)
 
   private def handleSorting(sorting: Option[String])(hotels: Hotels): Hotels =
     sorting.map(_.toLowerCase).fold(hotels)({
@@ -29,8 +30,12 @@ class HotelsController(implicit val bridge: Bridge) {
   private val safeGetByRoom = RateLimiter.wrapUnary(bridge.getByRoom, 10.seconds, 100)
 
   def getByCity(city: String, sorting: Option[String]): IO[Response[IO]] =
-    handleReponse(safeGetByCity(city).map(_.map(handleSorting(sorting))))
+    handleReponse {
+      Nested(safeGetByCity(city)).map(handleSorting(sorting))
+    }
 
   def getByRoom(room: String, sorting: Option[String]): IO[Response[IO]] =
-    handleReponse(safeGetByRoom(room).map(_.map(handleSorting(sorting))))
+    handleReponse {
+      Nested(safeGetByRoom(room)).map(handleSorting(sorting))
+    }
 }
