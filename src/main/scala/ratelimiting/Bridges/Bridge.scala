@@ -1,7 +1,6 @@
 package ratelimiting
 
 import cats.effect.IO
-import ratelimiting.types.Hotel
 
 /** The bridge is the abstraction that the rest of the codebase has to go
   * through in order to access our storage medium (be it a file, a database, etc.)
@@ -11,7 +10,7 @@ import ratelimiting.types.Hotel
   */
 trait Bridge {
 
-  def getByCity(city: String): IO[Array[Hotel]]
+  def getByCity(city: String): IO[Hotels]
 
-  def getByRoom(room: String): IO[Array[Hotel]]
+  def getByRoom(room: String): IO[Hotels]
 }
