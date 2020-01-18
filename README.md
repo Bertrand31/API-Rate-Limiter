@@ -75,7 +75,7 @@ DOS attack.
 is the rate limiting time window (we'll refer to it as `k`), and the third is the number of calls
 not to exceed during the time window `k` (we will refer to that number as `n`).
 
-If not value is provided for `k`, it will fall back to *10 seconds*. If not value is provided for `n`, it will fall back to *100*.
+If no value is provided for `k`, it will fall back to *10 seconds*. If no value is provided for `n`, it will fall back to *100*.
 
 Internally, the `wrapUnary` method maintains a mutable `Queue`.
 At any given time, said queue will contain the timestamps corresponding to all the successful calls
