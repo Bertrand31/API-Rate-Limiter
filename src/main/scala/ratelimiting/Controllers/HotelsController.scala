@@ -23,7 +23,7 @@ class HotelsController(implicit val bridge: Bridge) {
   private def handleSorting(sorting: Option[String])(hotels: Hotels): Hotels =
     sorting.map(_.toLowerCase).fold(hotels)({
       case "asc" => hotels.sortBy(_.price)
-      case _ =>     hotels.sortBy(- _.price)
+      case _     => hotels.sortBy(- _.price)
     })
 
   private val safeGetByCity = RateLimiter.wrapUnary(bridge.getByCity, 5.seconds, 10)
