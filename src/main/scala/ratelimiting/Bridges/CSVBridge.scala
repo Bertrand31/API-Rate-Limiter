@@ -16,7 +16,7 @@ object CSVBridge extends Bridge {
       Source.fromFile("src/main/resources/hoteldb.csv")
         .getLines
         .drop(1)
-        .map(_.split(","))
+        .map(_ split ",")
         .map(arrayToHotel)
         .toArray
     }

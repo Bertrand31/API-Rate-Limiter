@@ -6,14 +6,13 @@ import cats.effect.IO
 import cats.implicits._
 import org.http4s.Response
 import org.http4s.dsl.io.{Ok, TooManyRequests, http4sOkSyntax, http4sTooManyRequestsSyntax}
-import io.circe.syntax.EncoderOps
 import io.circe.generic.auto.exportEncoder
 import org.http4s.circe.CirceEntityEncoder.circeEntityEncoder
 
 class HotelsController(implicit val bridge: Bridge) {
 
   private val handleSuccess: IO[Hotels] => IO[Response[IO]] =
-    _ >>= ((arr: Hotels) => Ok(arr.asJson))
+    _ >>= (Ok(_))
 
   private val handleLimited: IO[Response[IO]] = TooManyRequests("Too many requests")
 
