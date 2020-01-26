@@ -11,8 +11,7 @@ import org.http4s.circe.CirceEntityEncoder.circeEntityEncoder
 
 class HotelsController(implicit val bridge: Bridge) {
 
-  private val handleSuccess: IO[Hotels] => IO[Response[IO]] =
-    _ >>= (Ok(_))
+  private val handleSuccess: IO[Hotels] => IO[Response[IO]] = _ >>= (Ok(_))
 
   private val handleLimited: IO[Response[IO]] = TooManyRequests("Too many requests")
 
